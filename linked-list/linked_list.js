@@ -36,11 +36,6 @@ for(var i = 0, len = elements.length; i < len; i++) {
     }
 }
 
-function insertAfter(newNode, referenceNode) {
-    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
-}
-
-
 class Node{
     constructor(){
         this.data = null; //current webpage's url
@@ -48,6 +43,7 @@ class Node{
         this.prev = null;
     }
 };
+
 class LinkedList{
     constructor(){
         this.head = new Node();

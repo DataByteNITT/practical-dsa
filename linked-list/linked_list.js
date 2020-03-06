@@ -22,6 +22,9 @@ function changeBackgroundImage(text){
 var elements = document.getElementsByTagName('a');
 for(var i = 0, len = elements.length; i < len; i++) {
     elements[i].onclick = function(){
+        var activeElement = document.getElementsByClassName("active")[0];
+        activeElement.classList.remove("active");
+        this.classList += "active";
         changeBackgroundImage(this.text);
         ll.insertNode(this.text);
         ll.displayHistory();

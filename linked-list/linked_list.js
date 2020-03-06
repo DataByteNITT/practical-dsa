@@ -1,49 +1,37 @@
 var nextButton = document.getElementById("nextButton");
 var prevButton = document.getElementById("prevButton");
 var container  = document.getElementById("container");
-var history    = document.getElementById("history");
-// var onLoad = function(iframe){
-    // alert("Loading : "+iframe.contentWindow.location.href);
-    // alert("Loading : "+iframe.src);
-// }
-window.onload = function(){
-    // alert(window.location.href);
-}
+var historyNode    = document.getElementById("history");
 
+// var ctx = history.getContext("2d");
+const MAX_COLS = 5;
 nextButton.onclick = function(){
-    // alert("Next");
     ll.goToNext();
+    changeBackgroundImage(ll.current.data);
 };
 
 prevButton.onclick = function(){
-    // alert("Back");
     ll.goToPrev();
+    changeBackgroundImage(ll.current.data);
 };
+
+function changeBackgroundImage(text){
+    container.style.backgroundImage = "url('img/"+text+".png')";
+}
 
 var elements = document.getElementsByTagName('a');
 for(var i = 0, len = elements.length; i < len; i++) {
-    elements[i].onclick = function () {
-        switch(this.id){
-            case "twitter"  : container.style.backgroundImage = "url('img/twitter.png')";  ll.insertNode(this.text);break;
-            case "google"   : container.style.backgroundImage = "url('img/google.png')";   ll.insertNode(this.text);break;
-            case "youtube"  : container.style.backgroundImage = "url('img/youtube.png')";  ll.insertNode(this.text);break;
-            case "linkedin" : container.style.backgroundImage = "url('img/linkedin.png')"; ll.insertNode(this.text);break;
-            case "facebook" : container.style.backgroundImage = "url('img/facebook.png')"; ll.insertNode(this.text);break;
-            default : break;
-        }
+    elements[i].onclick = function(){
+        changeBackgroundImage(this.text);
+        ll.insertNode(this.text);
+        ll.displayHistory();
     }
 }
 
-var urls = [
-    // "https://www.google.com/webhp?igu=1",
-    // "https://www.youtube.com/embed/tgbNymZ7vqY",
-    // "https://en.wikipedia.org/wiki/Main_Page",
-    "pages/first.html",
-    "pages/second.html",
-    "pages/third.html",
-    "pages/fourth.html",
-    "pages/fifth.html",
-];
+function insertAfter(newNode, referenceNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+}
+
 
 class Node{
     constructor(){
@@ -57,26 +45,44 @@ class LinkedList{
         this.head = new Node();
         this.current = new Node();
         this.last = new Node(); //maintain a last pointer to easily insert new nodes at the end
+        this.count = 0;
+        this.currentIndex = 0;
     }
 
     insertNode(value){
-        //By default, we will insert at the end of the list
+        this.count = this.getSize();
+        if(this.current.data == value){
+            return; //do not insert duplicate values
+        }
+        if(this.count >= LinkedList.MAX_NODES && this.currentIndex==this.count){
+            return; 
+        }
+        //insert after the current node
         var newNode = new Node();
         newNode.data = value;
-        if(this.head.data == null){
-            //Empty list condition
+        if(this.head.data == null){ //Empty list condition
             this.head = newNode;
-            this.last = newNode;
         }else{
-            this.last.next = newNode;
-            this.last = newNode;
+            this.current.next = newNode;
+            newNode.prev = this.current;
         }
+        this.last = newNode;
         this.current = newNode;
+        this.currentIndex += 1;
     }
 
     deleteNode(){
     }
 
+    getSize(){
+        var size = 0;
+        var currentNode = this.head;
+        while(currentNode!=null){
+            currentNode = currentNode.next;
+            size += 1;
+        }
+        return size;
+    }
     printList(){
         var currentNode = this.head;
         while(currentNode!=null){
@@ -91,29 +97,61 @@ class LinkedList{
 
     goToNext(){
         if(this.current.next == null){
-            nextButton.disabled = true;
+            console.log("Next is null");
             return;
-        }else{
-            nextButton.disabled = false;
         }
+        this.current = this.current.next;
+        this.currentIndex += 1;
+        ll.getCurrent();
+        ll.displayHistory();
     }
 
     goToPrev(){
         if(this.current.prev == null){
-            prevButton.disabled = true;
+            console.log("Prev is null");
             return;
-        }else{
-            prevButton.disabled = false;
+        }
+        this.current = this.current.prev;
+        this.currentIndex -= 1;
+        ll.getCurrent();
+        ll.displayHistory();
+    }
+
+    getCurrent(){
+        console.log("Current is : "+this.current.data);
+    }
+
+    displayHistory(){
+        var currentNode = this.head;
+        historyNode.innerHTML = "";
+        var counter = -1;
+        while(currentNode!=null){
+            // console.log(currentNode.data);
+            var node = document.createElement("span");
+            // node.className = "col-lg-3";
+            if(currentNode == this.current)
+            node.style.backgroundColor = "green";
+            else
+            node.style.backgroundColor = "red";
+            var textNode = document.createTextNode(currentNode.data);
+            node.appendChild(textNode);
+
+            historyNode.appendChild(node);
+            
+            if(currentNode.next !=null){
+            var arrowNode = document.createElement("span");
+            arrowNode.className = "arrow";
+            var arrowNodeText = document.createTextNode("<=>");
+            arrowNode.appendChild(arrowNodeText);
+            historyNode.appendChild(arrowNode);
+            counter =  (counter+1)%MAX_COLS;
+            if(counter == MAX_COLS-1){
+                historyNode.innerHTML += "<br><br>";
+            }
+            }
+            currentNode = currentNode.next;
         }
     }
 }
-LinkedList.MAX_NODES = 10; //max no. of pages to track
-
+LinkedList.MAX_NODES =  30; //max no. of pages to track
 var ll = new LinkedList();
-ll.insertNode(1);
-// ll.insertNode(2);
-// ll.insertNode(3);
-// ll.insertNode(4);
-// ll.insertNode(5);
-
-ll.printList();

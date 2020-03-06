@@ -11,7 +11,7 @@
 </head>
 <body>
 <center>
-    <div class="jumbotron text-center">
+    <div class="text-center">
         <h1>Your mini browser</h1>
     </div>    
     <div style="background-color: black;width: 500px; height: 580px;border: 4px solid black;border-radius: 2%;">
@@ -22,17 +22,17 @@
             <li><a id="facebook" href="#">Facebook</a></li>
             <li><a id="linkedin" href="#">LinkedIn</a></li>
         </ul>
-        <div>
-            <button class="btn btn-info" id="prevButton"><img src="" alt="Back"/></button>
-            <button class="btn btn-success" id="nextButton"><img src="" alt="Next"/></button>
-        </div>
-        <div id="container" style="width: 100%;height: 100%;">
+            <button style="width: 40%;" class="btn btn-info" id="prevButton"><img src="" alt="Back"/></button>
+            <button style="width: 40%;"class="btn btn-success" id="nextButton"><img src="" alt="Next"/></button>
+        <div id="container" style="width: 100%;height: 85%;">
         </div>
         <!-- <iframe id="container"></iframe> -->
+        <br>
+        <h2>History : </h2>
+        <div class="row" id="history"></div>
     </div>
-    <br>
-    <h2>History : </h2>
-    <div style="background-color: black;color: white;" id="history"></div>
+    
+    <!-- <canvas id="history" style="border: 2px solid black;"></canvas> -->
 </center>
 <script src="linked_list.js"></script>
 </body>

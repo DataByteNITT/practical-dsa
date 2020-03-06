@@ -1,10 +1,11 @@
-var nextButton = document.getElementById("nextButton");
-var prevButton = document.getElementById("prevButton");
-var container  = document.getElementById("container");
-var historyNode    = document.getElementById("history");
+var nextButton  = document.getElementById("nextButton");
+var prevButton  = document.getElementById("prevButton");
+var container   = document.getElementById("container");
+var historyNode = document.getElementById("history");
+var clearButton = document.getElementById("clearButton");
 
-// var ctx = history.getContext("2d");
 const MAX_COLS = 5;
+
 nextButton.onclick = function(){
     ll.goToNext();
     changeBackgroundImage(ll.current.data);
@@ -15,6 +16,10 @@ prevButton.onclick = function(){
     changeBackgroundImage(ll.current.data);
 };
 
+clearButton.onclick = function(){
+    ll.head = new Node();
+    ll.displayHistory();
+}
 function changeBackgroundImage(text){
     container.style.backgroundImage = "url('img/"+text+".png')";
 }
@@ -128,33 +133,32 @@ class LinkedList{
         var currentNode = this.head;
         historyNode.innerHTML = "";
         var counter = -1;
-        while(currentNode!=null){
-            // console.log(currentNode.data);
+        while(currentNode.data!=null){
             var node = document.createElement("span");
-            // node.className = "col-lg-3";
             if(currentNode == this.current)
-            node.style.backgroundColor = "green";
+            {node.style.backgroundColor = "green";}
             else
-            node.style.backgroundColor = "red";
+            {node.style.backgroundColor = "red";}
             var textNode = document.createTextNode(currentNode.data);
             node.appendChild(textNode);
 
             historyNode.appendChild(node);
             
             if(currentNode.next !=null){
-            var arrowNode = document.createElement("span");
-            arrowNode.className = "arrow";
-            var arrowNodeText = document.createTextNode("<=>");
-            arrowNode.appendChild(arrowNodeText);
-            historyNode.appendChild(arrowNode);
-            counter =  (counter+1)%MAX_COLS;
-            if(counter == MAX_COLS-1){
-                historyNode.innerHTML += "<br><br>";
-            }
+                var arrowNode = document.createElement("span");
+                arrowNode.className = "arrow";
+                var arrowNodeText = document.createTextNode("<=>");
+                arrowNode.appendChild(arrowNodeText);
+                historyNode.appendChild(arrowNode);
+                counter =  (counter+1)%MAX_COLS;
+                if(counter == MAX_COLS-1){
+                    historyNode.innerHTML += "<br><br>";
+                }
             }
             currentNode = currentNode.next;
         }
     }
 }
-LinkedList.MAX_NODES =  30; //max no. of pages to track
+LinkedList.MAX_NODES =  30; //max no. of nodes to track
+
 var ll = new LinkedList();

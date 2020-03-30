@@ -48,6 +48,80 @@
                 <div class="row" id="history"></div>
             </div>
         </div>
+        <div class="row">
+            <h2 class="text-center">Implementation</h2>
+            <div class="col-lg-2">
+            </div>
+            <div class="col-lg-8">
+                <pre ><code class="javascript">
+                    class Node{
+                        constructor(data){
+                            this.data = data; //current webpage's url
+                            this.next = null;
+                            this.prev = null;
+                        }
+                    };
+        
+                    class LinkedList{
+                        constructor(){
+                            this.head = new Node();
+                            this.current = new Node();
+                            this.count = 0;
+                            this.currentIndex = 0;
+                        }
+                    
+                        insertNode(value){
+                            this.count = this.getSize();
+                            if(this.current.data == value){
+                                return; //do not insert duplicate values
+                            }
+                            if(this.count >= LinkedList.MAX_NODES && this.currentIndex==this.count){
+                                return; 
+                            }
+                            //insert after the current node
+                            var newNode = new Node(value);
+                            if(this.head.data == null){ //Empty list condition
+                                this.head = newNode;
+                            }else{
+                                this.current.next = newNode;
+                                newNode.prev = this.current;
+                            }
+                            this.current = newNode;
+                            this.currentIndex += 1;
+                        }
+                    
+                        getSize(){
+                            var size = 0;
+                            var currentNode = this.head;
+                            while(currentNode!=null){
+                                currentNode = currentNode.next;
+                                size += 1;
+                            }
+                            return size;
+                        }
+                        printList(){
+                            var currentNode = this.head;
+                            while(currentNode!=null){
+                                console.log(currentNode.data);
+                                currentNode = currentNode.next;
+                            }
+                        }
+                    
+                        isEmpty(){
+                            return (this.head == null);
+                        }
+        
+                        getCurrent(){
+                            console.log("Current is : "+this.current.data);
+                        }
+                    
+                        }
+                    
+                    </code></pre>
+            </div>
+            <div class="col-lg-2">
+            </div>
+        </div>
     </div>
 <script src="linked_list.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>

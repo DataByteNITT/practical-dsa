@@ -7,34 +7,50 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>    
     <link rel="stylesheet" href="css/style.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/default.min.css"> -->
+    <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/ir-black.css">
     <title>Linked List example</title>
 </head>
 <body>
-<center>
-    <div class="text-center">
-        <h1>Your mini browser</h1>
-    </div>    
-    <div style="background-color: black;width: 500px; height: 580px;border: 4px solid black;border-radius: 2%;">
-        <ul>
-            <li><a id="google" class="active" href="#">Google</a></li>
-            <li><a id="youtube" href="#">YouTube</a></li>
-            <li><a id="twitter" href="#">Twitter</a></li>
-            <li><a id="facebook" href="#">Facebook</a></li>
-            <li><a id="linkedin" href="#">LinkedIn</a></li>
-        </ul>
-        <button style="width: 30%;" class="btn btn-warning" id="prevButton"><img style="width: 30px;height: 30px;" src="img/prev_btn.png" alt="Back"/></button>
-        <button style="width: 30%;" class="btn btn-default" id="nextButton"><img style="width: 30px;height: 30px;" src="img/next_btn.png" alt="Next"/></button>
-        <button style="width: 30%;" class="btn btn-dark" id="clearButton"><img style="width: 30px;height: 30px;" src="img/delete_btn.png" alt="Clear History"/></button>
-        <div id="container" style="width: 100%;height: 85%;">
+    <div class="container">
+        <div class="row text-center bg-success">
+            <div class="col-lg-2">
+            </div>
+            <div class="col-lg-8">
+                <h1>Linked list example</h1>
+                <h2>Your mini browser</h2>
+            </div>
+            <div class="col-lg-2">
+                <img style="height: 100px;" src="img/db.png" alt="">
+            </div>
+        </div>    
+        <div class="row">
+            <div class="col-lg-5" style="background-color: black; height: 500px;border: 4px solid black;border-radius: 2%;">
+                <ul>
+                    <li><a id="google" class="active" href="#">Google</a></li>
+                    <li><a id="youtube" href="#">YouTube</a></li>
+                    <li><a id="twitter" href="#">Twitter</a></li>
+                    <li><a id="facebook" href="#">Facebook</a></li>
+                    <li><a id="linkedin" href="#">LinkedIn</a></li>
+                </ul>
+                <button style="width: 30%;" class="btn btn-warning" id="prevButton"><img style="width: 30px;height: 30px;" src="img/prev_btn.png" alt="Back"/></button>
+                <button style="width: 30%;" class="btn btn-default" id="nextButton"><img style="width: 30px;height: 30px;" src="img/next_btn.png" alt="Next"/></button>
+                <button style="width: 30%;" class="btn btn-dark" id="clearButton"><img style="width: 30px;height: 30px;" src="img/delete_btn.png" alt="Clear History"/></button>
+                <div id="container" style="width: 100%;height: 80%;background-size: cover;" >
+                </div>
+                <!-- <iframe id="container"></iframe> -->
+                <br>
+            </div>
+            <div class="col-lg-1">
+            </div>
+            <div class="col-lg-6">
+                <h2>History : </h2>
+                <div class="row" id="history"></div>
+            </div>
         </div>
-        <!-- <iframe id="container"></iframe> -->
-        <br>
-        <h2>History : </h2>
-        <div class="row" id="history"></div>
     </div>
-    
-    <!-- <canvas id="history" style="border: 2px solid black;"></canvas> -->
-</center>
 <script src="linked_list.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 </body>
 </html>

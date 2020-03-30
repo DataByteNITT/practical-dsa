@@ -131,6 +131,7 @@ class LinkedList{
         var counter = -1;
         while(currentNode.data!=null){
             var node = document.createElement("span");
+            node.classList = "node";
             if(currentNode == this.current)
             {node.style.backgroundColor = "green";}
             else

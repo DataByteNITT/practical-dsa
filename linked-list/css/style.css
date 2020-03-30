@@ -32,7 +32,7 @@ div{
     background-repeat: no-repeat no-repeat;
 }
 
-span{
+span.node{
     font-family: monospace;
     font-size: 20px;
     padding: 5px;

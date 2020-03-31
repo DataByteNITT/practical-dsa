@@ -23,15 +23,14 @@ class stack{
     }
 
     getData(i){
-        i=15-i;
         k= s1.size();
         i=k-i;
         j=1;
         
         var temp= s1.gettop();
-        while(j<i)
+        while(j<=i)
           {  temp = temp.next; j++ } 
-        console.log(temp.data);
+    
         return temp.data;
 
 
@@ -39,39 +38,36 @@ class stack{
 
     updatePushDisplay(){
         k = this.size();
-        i=15-k;
-
-        let c = document.getElementById(i);
+        console.log(k);
+        let c = document.getElementById(k);
         
         c.style.backgroundColor="red";
-        
-
-        c.addEventListener('mouseover' , function(e){
-            imgData = s1.getData(e.target.c);
-            currimgData = ctx.getImageData(0 ,0 , canvas.width , canvas.height);
-
-            ctx.putImageData(imgData , 0 , 0);
-            setTimeout(function() {
-                ctx.putImageData(currimgData, 0 ,0);
-              }, 400);
-        }, false);
-    
-
+        /*
+        console.log(c.style);
+        c.addEventListener('click' , function hover(e){
+            if(e.target.style.backgroundColor === "red"){
+                imgData = s1.getData(e.target.id);
+                currimgData = ctx.getImageData(0 ,0 , canvas.width , canvas.height);
+                console.log(currimgData);
+                console.log(imgData);
+                ctx.putImageData(imgData , 0 , 0);
+                setTimeout(function(){
+                    ctx.putImageData(currimgData, 0 ,0);
+                }, 400);
+            }  
+        }, true);
+        */
     }
 
 
 
     updatePopDisplay(){
         k = this.size();
-        i=15-k;
-
-        let c = document.getElementById(i);
-        
-            c.style.backgroundColor="white";
+        console.log(k);
+        let c = document.getElementById(k);
+        c.style.backgroundColor="white";
+                
     }
-
-    
-
 
     push(imgData , is_undo){
         var newNode = new Node();
@@ -79,11 +75,8 @@ class stack{
         newNode.data = imgData;
         this.top = newNode;
 
-        if(is_undo)
-        this.updatePushDisplay();
-
-       
-        console.log(this.size());
+        if(is_undo==1)
+            this.updatePushDisplay();        
     }
 
     pop(is_undo){
@@ -91,10 +84,10 @@ class stack{
             return null;
         
         if(is_undo)
-        this.updatePopDisplay();
+         this.updatePopDisplay();
         
         this.top = this.top.next;
-        console.log(this.size());
+        
         
        
     }
@@ -107,10 +100,14 @@ class stack{
         return this.top.data;
     }
 
-    //show(){}
-
-    deleteall(){
+    deleteall(is_undo){
         this.top=null;
+        if(is_undo)
+         for(i=1;i<=14;i++)
+            {
+            var cell = document.getElementById(i);
+            cell.style.backgroundColor = "white";
+            }
     }
 
     size(){
@@ -145,16 +142,16 @@ var dot_flag=true;
 
 
 let cell = document.getElementsByTagName("td");
-cell[0].setAttribute('id' , '1');
+cell[0].setAttribute('id' , '14');
 let row = document.getElementById("row");
 let table = document.getElementById("stack");
 
 
-for(i=1;i<=13;i++){
+for(i=13;i>=1;i--){
 
     let tr= document.createElement("tr");
     let new_cell  = cell[0].cloneNode(true);
-    new_cell.setAttribute('id' , i+1);
+    new_cell.setAttribute('id' , i);
     tr.appendChild(new_cell);
     table.appendChild(tr);
 }
@@ -187,7 +184,7 @@ document.getElementById("redo").onclick = function(){
     }
 
 
-  //  console.log(imgData);
+  
     imgData = s2.Top();
     if(imgData!==null){
     ctx.putImageData(imgData , 0 , 0);
@@ -234,11 +231,11 @@ function find( state ,  e){
         currY = e.clientY - canvas.offsetTop;
         flag  = true;
         //redo stack is emptied, when mouse is pressed. 
-        s2.deleteall();
+        s2.deleteall(0);
          
         if(save_flag){
             imgData = ctx.getImageData(0, 0 , canvas.width , canvas.height);
-        //    console.log(imgData);
+       
             s1.push(imgData  , 1);
             save_flag=false;
         }
@@ -278,16 +275,14 @@ function Start(){
 	ctx.fillStyle='#000000';
     ctx.fillRect(0,0,canvas.width, canvas.height);
     //s1 to store the undo states
-    s1.deleteall();
+    s1.deleteall(1);
 
     //s2 to store the redo states
-    s2.deleteall();
+    s2.deleteall(0);
 }
 
 
-function show(){
 
-}
 
 
 

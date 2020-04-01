@@ -129,7 +129,7 @@ class LinkedList{
         var currentNode = this.head;
         historyNode.innerHTML = "";
         var counter = -1;
-        while(currentNode.data!=null){
+        while(currentNode != null && currentNode.data != null){
             var node = document.createElement("span");
             node.classList = "node";
             if(currentNode == this.current)

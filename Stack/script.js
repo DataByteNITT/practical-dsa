@@ -40,23 +40,23 @@ class stack{
         k = this.size();
         console.log(k);
         let c = document.getElementById(k);
-        
         c.style.backgroundColor="red";
-        /*
+        
         console.log(c.style);
-        c.addEventListener('click' , function hover(e){
+        $(c).unbind('click').click(function hover(e) {
             if(e.target.style.backgroundColor === "red"){
                 imgData = s1.getData(e.target.id);
                 currimgData = ctx.getImageData(0 ,0 , canvas.width , canvas.height);
+                
                 console.log(currimgData);
                 console.log(imgData);
                 ctx.putImageData(imgData , 0 , 0);
+                count++;
                 setTimeout(function(){
                     ctx.putImageData(currimgData, 0 ,0);
-                }, 400);
-            }  
-        }, true);
-        */
+                }, 400);    
+            } 
+        });        
     }
 
 
@@ -66,6 +66,7 @@ class stack{
         console.log(k);
         let c = document.getElementById(k);
         c.style.backgroundColor="white";
+        
                 
     }
 
@@ -75,7 +76,7 @@ class stack{
         newNode.data = imgData;
         this.top = newNode;
 
-        if(is_undo==1)
+        if(is_undo==1 && this.size()<=14) 
             this.updatePushDisplay();        
     }
 
@@ -83,7 +84,7 @@ class stack{
         if(this.top == null)
             return null;
         
-        if(is_undo)
+        if(is_undo==1 && this.size()<=14)
          this.updatePopDisplay();
         
         this.top = this.top.next;
@@ -132,7 +133,7 @@ class stack{
 
 
 //variables
-var j ,k ,prevX , prevY , currX , currY, flag, url, save_flag, imgData , currimgData;
+var j ,k ,prevX , prevY , currX , currY, flag, url, save_flag, imgData , currimgData, count;
 save_flag=true;
 flag = false;
 let s1 = new stack();
@@ -156,6 +157,15 @@ for(i=13;i>=1;i--){
     table.appendChild(tr);
 }
 
+let tr = document.createElement("tr");
+let new_cell = document.createElement("td");
+new_cell.style.borderColor="white";
+new_cell.style.color="red";
+new_cell.innerHTML="<h4>Click to view stored image</h4>";
+
+tr.appendChild(new_cell);
+table.appendChild(tr);
+
 
 
 
@@ -164,11 +174,9 @@ for(i=13;i>=1;i--){
 
 
 //functions for the 3 buttons
-document.getElementById("undo").onclick = function(){
-      
+document.getElementById("undo").onclick = function(){    
     imgData = ctx.getImageData(0 ,0 , canvas.width , canvas.height);
     s2.push(imgData , 0);
-
     imgData = s1.Top();
     if(imgData!==null){
     s1.pop(1);
@@ -236,7 +244,7 @@ function find( state ,  e){
         if(save_flag){
             imgData = ctx.getImageData(0, 0 , canvas.width , canvas.height);
        
-            s1.push(imgData  , 1);
+            s1.push(imgData, 1);
             save_flag=false;
         }
         if(dot_flag)
@@ -292,3 +300,6 @@ function Start(){
 
 
 Start();
+
+
+

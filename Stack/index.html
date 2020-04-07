@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" >
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+        <title>STACK</title>
+
+        <style>
+            table , th , td{
+                border: 1px solid blue;
+            }
+        </style>
+
+    </head>
+
+    <body>
+        <div class = "text-center">
+            <h1> Draw using mouse </h1>
+        </div>
+        <table id="stack" style = "float:left; margin-left: 200px;">
+            <tr id="row" ><td id = "cell"style = "width:300px; height: 50px; " ></td></tr>
+            
+        </table>
+
+        <center>
+           
+            <canvas id="paint"></canvas>
+            <br>
+           <button class = "btn btn-light" id="undo"><img src = "undo.png" style = "width:80px; height: 80px"alt="undo"></button>
+           <button style = "height:100px; width:160px" type= "button" class= "btn btn-outline-danger" id="clear"><h2>RESET</h2></button>
+          <button class = "btn btn-light" id ="redo"><img src = "undo.png" style ="width:80px; height:80px;  transform: scaleX(-1);" alt= "redo"></button>
+        </center>
+        <script src = "script.js"></script>
+    </body>
+
+</html>

@@ -227,8 +227,8 @@ function find( state ,  e){
     if (state == 'down') {
         prevX = currX;
         prevY = currY;
-        currX = e.clientX - canvas.currX;
-        currY = e.clientY - canvas.currY;
+        currX = e.clientX - canvas.offsetLeft;
+        currY = e.clientY - canvas.offsetTop;
         flag  = true;
         //redo stack is emptied, when mouse is pressed. 
         s2.deleteall(0);

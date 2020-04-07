@@ -23,8 +23,7 @@ class stack{
     }
 
     getData(i){
-        k= s1.size();
-        i=k-i;
+        i=s1.size()-i;
         j=1;
         
         var temp= s1.gettop();
@@ -37,19 +36,13 @@ class stack{
     }
 
     updatePushDisplay(){
-        k = this.size();
-        console.log(k);
-        let c = document.getElementById(k);
-        c.style.backgroundColor="red";
         
-        console.log(c.style);
+        let c = document.getElementById(this.size());
+        c.style.backgroundColor="red";
         $(c).unbind('click').click(function hover(e) {
             if(e.target.style.backgroundColor === "red"){
                 imgData = s1.getData(e.target.id);
-                currimgData = ctx.getImageData(0 ,0 , canvas.width , canvas.height);
-                
-                console.log(currimgData);
-                console.log(imgData);
+                currimgData = ctx.getImageData(0 ,0 , canvas.width , canvas.height);            
                 ctx.putImageData(imgData , 0 , 0);
                 count++;
                 setTimeout(function(){
@@ -62,10 +55,7 @@ class stack{
 
 
     updatePopDisplay(){
-        k = this.size();
-        console.log(k);
-        let c = document.getElementById(k);
-        c.style.backgroundColor="white";
+        document.getElementById(this.size()).style.backgroundColor="white";
         
                 
     }
@@ -76,7 +66,7 @@ class stack{
         newNode.data = imgData;
         this.top = newNode;
 
-        if(is_undo==1 && this.size()<=14) 
+        if(is_undo && this.size()<=max_size) 
             this.updatePushDisplay();        
     }
 
@@ -84,7 +74,7 @@ class stack{
         if(this.top == null)
             return null;
         
-        if(is_undo==1 && this.size()<=14)
+        if(is_undo && this.size()<=max_size)
          this.updatePopDisplay();
         
         this.top = this.top.next;
@@ -104,7 +94,7 @@ class stack{
     deleteall(is_undo){
         this.top=null;
         if(is_undo)
-         for(i=1;i<=14;i++)
+         for(i=1;i<=max_size;i++)
             {
             var cell = document.getElementById(i);
             cell.style.backgroundColor = "white";
@@ -140,15 +130,17 @@ let s1 = new stack();
 let s2 = new stack();
 var i=0;
 var dot_flag=true;
+//max_size for display
+const max_size= 14;
 
 
 let cell = document.getElementsByTagName("td");
-cell[0].setAttribute('id' , '14');
+cell[0].setAttribute('id' , max_size);
 let row = document.getElementById("row");
 let table = document.getElementById("stack");
 
 
-for(i=13;i>=1;i--){
+for(i=max_size-1;i>=1;i--){
 
     let tr= document.createElement("tr");
     let new_cell  = cell[0].cloneNode(true);
@@ -235,8 +227,8 @@ function find( state ,  e){
     if (state == 'down') {
         prevX = currX;
         prevY = currY;
-        currX = e.clientX - canvas.offsetLeft;
-        currY = e.clientY - canvas.offsetTop;
+        currX = e.clientX - canvas.currX;
+        currY = e.clientY - canvas.currY;
         flag  = true;
         //redo stack is emptied, when mouse is pressed. 
         s2.deleteall(0);
